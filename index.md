@@ -1,36 +1,19 @@
-## Welcome to GitHub Pages
+## This is the official page
 
-You can use the [editor on GitHub](https://github.com/SvenPVoigt/ImageMKS_web/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+Press: [Reload](imagemks.org)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Once in a while I make art
 
-### Markdown
+![Image](figs/test.png)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+```python
+import os
 
-# Header 1
-## Header 2
-### Header 3
+away = '/'
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+os.walk(away)
 ```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/SvenPVoigt/ImageMKS_web/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
 ### Support or Contact
 
