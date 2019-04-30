@@ -4,7 +4,7 @@ Press: [Reload](imagemks.org)
 
 ### Once in a while I make art
 
-![Image](figs/test.png)
+![Image](50-50_colors.png)
 
 
 ```python
