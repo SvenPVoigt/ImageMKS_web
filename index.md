@@ -1,6 +1,6 @@
 ## This is the official page
 
-Press: [Reload](imagemks.org)
+Press: [Reload](http://imagemks.org)
 
 ### Once in a while I make art
 
