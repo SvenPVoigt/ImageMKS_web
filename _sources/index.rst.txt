@@ -1,0 +1,30 @@
+Welcome to ImageMKS's documentation!
+====================================
+
+.. automodule:: imagemks.filters
+  :members:
+
+.. automodule:: imagemks.masking
+  :members:
+
+.. automodule:: imagemks.structures
+  :members:
+
+.. automodule:: imagemks.visualization
+  :members:
+
+.. automodule:: imagemks.workflows
+  :members:
+
+.. toctree::
+   :maxdepth: 4
+   :caption: Contents:
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
