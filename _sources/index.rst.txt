@@ -1,24 +1,15 @@
-Welcome to ImageMKS's documentation!
-====================================
+ImageMKS
+========
 
-.. automodule:: imagemks.filters
-  :members:
-
-.. automodule:: imagemks.masking
-  :members:
-
-.. automodule:: imagemks.structures
-  :members:
-
-.. automodule:: imagemks.visualization
-  :members:
-
-.. automodule:: imagemks.workflows
-  :members:
+The package for sharing high-level image analysis workflows and underlying algorithms
+-------------------------------------------------------------------------------------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
    :caption: Contents:
+
+   API.rst
+   Examples.rst
 
 
 
