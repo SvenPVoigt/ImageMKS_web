@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Welcome to ImageMKS’s documentation! &#8212; ImageMKS 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-imagemks.filters">
+<span id="welcome-to-imagemks-s-documentation"></span><h1>Welcome to ImageMKS’s documentation!<a class="headerlink" href="#module-imagemks.filters" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="imagemks.filters.local_avg">
+<code class="descclassname">imagemks.filters.</code><code class="descname">local_avg</code><span class="sig-paren">(</span><em>img</em>, <em>rad</em>, <em>mask=None</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.filters.local_avg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the local average of a neighborhood taking into account that the
+edges need to be treated differently. Averages are only calculated at the
+edges using values inside the image and the neighborhood.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>An image.</em>) – </p></li>
+<li><p><strong>rad</strong> (<em>The radius of the neighborhood.</em>) – </p></li>
+<li><p><strong>mask</strong> (<em>A binary array that can be used to define what is outside the</em>) – image. Optional.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>The local averages at all pixel locations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="imagemks.filters.fftgauss">
+<code class="descclassname">imagemks.filters.</code><code class="descname">fftgauss</code><span class="sig-paren">(</span><em>img</em>, <em>sigma</em>, <em>theta=0</em>, <em>pad_type=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.filters.fftgauss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smooths the input image with a gaussian kernel. Uses the fft method and allows
+specifying a custom pad type with <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs from numpy.pad documentation. Smoothing
+a color image will smooth each color channel individually.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>An image to be smoothed of size</em><em> (</em><em>M</em><em>,</em><em>N</em><em>) or </em><em>(</em><em>M</em><em>,</em><em>N</em><em>,</em><em>3</em><em>)</em><em></em>) – </p></li>
+<li><p><strong>sigma</strong> (<em>Tuple defining the standard deviation of the gaussian in x and y directions.</em>) – A single value will assign the same value to x and y st. devs..</p></li>
+<li><p><strong>theta</strong> (<em>The rotation of the gaussian in radians.</em>) – </p></li>
+<li><p><strong>pad_type</strong> (<em>The padding type to be used. For additional information see numpy.pad .</em>) – Defaults to constant.</p></li>
+<li><p><strong>kwargs</strong> (<em>See numpy.pad . Defaults to constant_values=0.</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A smoothed image.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>There are many gaussian smoothing functions. This one is unique because it
+automatically handles color images. It also allows defining very unique
+gaussian kernels with strain and orientation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="imagemks.filters.smooth_segmentation">
+<code class="descclassname">imagemks.filters.</code><code class="descname">smooth_segmentation</code><span class="sig-paren">(</span><em>S</em>, <em>r=1</em>, <em>add_cond=0.5</em>, <em>rem_cond=None</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.filters.smooth_segmentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smooths a segmented image, where the input is a binary segmentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>S</strong> (<em>A binary image.</em>) – </p></li>
+<li><p><strong>add_cond</strong> (<em>Parameter that specifies the percentage of neighboring pixels</em>) – that must be in the segmentation for that pixel to be converted to
+the segmentation.</p></li>
+<li><p><strong>rem_cond</strong> (<em>Parameter that specifies the percentage of neighboring pixels</em>) – outside the segmentation that cause a pixel to be removed from
+the segmentation.</p></li>
+<li><p><strong>r</strong> (<em>The radius of the kernel used to define the neighboring pixels.</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A smoothed version of the segmented image.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>By default, pixels are only added to a segmentation. Alternatively, pixels
+can be removed and not added. Adding and removing does not make sense with
+this algorithm since a pixel used to calculate an add condition could be
+removed later resulting in a non-smooth segmentation. This method can be
+thought of as a generalization of binary erosion and dilation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="imagemks.filters.fftconvolve2d">
+<code class="descclassname">imagemks.filters.</code><code class="descname">fftconvolve2d</code><span class="sig-paren">(</span><em>h1</em>, <em>h2</em>, <em>r</em>, <em>pad_type=None</em>, <em>centered=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.filters.fftconvolve2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method adds to the functionality of scipy.signal.fftconvolve
+by providing padding options for 2D arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h1</strong> (<em>The signal to be convolved</em><em>, </em><em>should be</em><em> (</em><em>M</em><em>,</em><em>N</em><em>) </em><em>and is usually the image.</em>) – </p></li>
+<li><p><strong>h2</strong> (<em>The signal to convolve with</em><em>, </em><em>should be</em><em> (</em><em>M</em><em>,</em><em>N</em><em>) </em><em>and is usually the filter.</em>) – Will always be padded with zeros.</p></li>
+<li><p><strong>r</strong> (<em>The padding width. Termed r since an int value will introduce a radius</em>) – around the input. Different padding widths not supported.</p></li>
+<li><p><strong>pad_type</strong> (<em>The padding type to be used. For additional information see numpy.pad .</em>) – Defaults to constant.</p></li>
+<li><p><strong>centered</strong> (<em>Needed since the filters in this package can be defined as centered</em>) – or origin type.</p></li>
+<li><p><strong>kwargs</strong> (<em>See numpy.pad . Defaults to constant_values=0.</em>) – </p></li>
+<li><p><strong>Results</strong> – </p></li>
+<li><p><strong>-------</strong> – </p></li>
+<li><p><strong>= A convolved signal in real space. Imaginary outputs not supported.</strong> (<em>a</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-imagemks.masking"></span><dl class="function">
+<dt id="imagemks.masking.maskfourier">
+<code class="descclassname">imagemks.masking.</code><code class="descname">maskfourier</code><span class="sig-paren">(</span><em>image</em>, <em>mask</em>, <em>centered=True</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.masking.maskfourier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Masks the fourier transform of an image using the given mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>An</em><em> (</em><em>M</em><em>,</em><em>N</em><em>) </em><em>array</em><em> or </em><em>(</em><em>M</em><em>,</em><em>N</em><em>,</em><em>3</em><em>) </em><em>array.</em>) – </p></li>
+<li><p><strong>mask</strong> (<em>An</em><em> (</em><em>M</em><em>,</em><em>N</em><em>) </em><em>array. Will be expanded to 3 channels if image is color.</em>) – </p></li>
+<li><p><strong>centered</strong> (<em>Is the mask for a centered fourier transform? Optional.</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>(A, B)</strong> – an image reconstructed from values in the mask. B contains an image
+reconstructed from values outside the mask.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Two images generated from the masked fourier transforms. A contains</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imagemks.masking</span> <span class="k">import</span> <span class="n">maskfourier</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask_centered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+<span class="go">                              [1,1,1],</span>
+<span class="go">                              [0,1,0]])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mask_origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">mask_centered</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask_origin</span>
+<span class="go">array([[1, 1, 1],</span>
+<span class="go">       [1, 0, 0],</span>
+<span class="go">       [1, 0, 0]])</span>
+</pre></div>
+</div>
+<p>The difference between centered masks and uncentered can be resolved by
+using np.fft.fftshift and np.ifftshift. By default all masks in structures
+are centered.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">maskfourier</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">mask_centered</span><span class="p">,</span> <span class="n">centered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">(array([[1., 1., 1.],</span>
+<span class="go">        [1., 1., 1.],</span>
+<span class="go">        [1., 1., 1.]]),</span>
+<span class="go"> array([[0., 0., 0.],</span>
+<span class="go">        [0., 0., 0.],</span>
+<span class="go">        [0., 0., 0.]]))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<span class="target" id="module-imagemks.structures"></span><dl class="function">
+<dt id="imagemks.structures.divergent">
+<code class="descclassname">imagemks.structures.</code><code class="descname">divergent</code><span class="sig-paren">(</span><em>size</em>, <em>centered=True</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.structures.divergent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates two grids that specify the x and y values at each point in 2d space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>The size of the output grids.</em>) – </p></li>
+<li><p><strong>centered</strong> (<em>If true</em><em>, </em><em>the center will be in the middle of the array</em>) – at pixel (size[0]//2, size[1]//2). If false, the center will be
+at the origin pixel (0,0). Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>A grid that defines the x and y values at each point in 2d space. If the</em></p></li>
+<li><p><em>graph quadrants are recalled, a centered grid will produce an array with</em></p></li>
+<li><p><em>quadrants ordered as such</em></p></li>
+<li><p><em>[ 2 | 1 ]</em></p></li>
+<li><p><em>[ - - - ]</em></p></li>
+<li><p><em>[ 3 | 4 ]</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="imagemks.structures.circle">
+<code class="descclassname">imagemks.structures.</code><code class="descname">circle</code><span class="sig-paren">(</span><em>r</em>, <em>size=None</em>, <em>centered=True</em>, <em>dtype=&lt;class 'numpy.bool_'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.structures.circle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a circle with specified dtype. If bool or int, can be used as a mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>The radius of the circle.</em>) – </p></li>
+<li><p><strong>size</strong> (<em>The size of the output array that contains the circle. Defaults to</em>) – (round(2*r+1), round(2*r+1)).</p></li>
+<li><p><strong>centered</strong> (<em>If true</em><em>, </em><em>the circle will be centered in the middle of the array</em>) – at pixel (size[0]//2, size[1]//2). If false, the circle will be centered
+at the origin pixel (0,0). Defaults to True.</p></li>
+<li><p><strong>dtype</strong> (<em>A valid numpy dtype. Defaults to boolean.</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A circle that obeys the equation <span class="math notranslate nohighlight">\(x^2 + y^2 &lt; r^2\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="imagemks.structures.donut">
+<code class="descclassname">imagemks.structures.</code><code class="descname">donut</code><span class="sig-paren">(</span><em>r_outer</em>, <em>r_inner</em>, <em>size=None</em>, <em>centered=True</em>, <em>dtype=&lt;class 'numpy.bool_'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.structures.donut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a 2d donut with specified dtype. If bool or int, can be used as a mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r_outer</strong> (<em>The radius of the outer border.</em>) – </p></li>
+<li><p><strong>r_inner</strong> (<em>The radius of the inner border.</em>) – </p></li>
+<li><p><strong>size</strong> (<em>The size of the output array that contains the donut. Defaults to</em>) – (round(2*r_outer+1), round(2*r_outer+1)).</p></li>
+<li><p><strong>centered</strong> (<em>If true</em><em>, </em><em>the donut will be centered in the middle of the array</em>) – at pixel (size[0]//2, size[1]//2). If false, the donut will be centered
+at the origin pixel (0,0). Defaults to True.</p></li>
+<li><p><strong>dtype</strong> (<em>A valid numpy dtype. Defaults to boolean.</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A donut that obeys the equation <span class="math notranslate nohighlight">\(r_inner^2 &lt; x^2 + y^2 &lt; r_outer^2\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="imagemks.structures.wheel">
+<code class="descclassname">imagemks.structures.</code><code class="descname">wheel</code><span class="sig-paren">(</span><em>n_quad</em>, <em>width</em>, <em>size</em>, <em>r=None</em>, <em>start=0</em>, <em>centered=True</em>, <em>dtype=&lt;class 'numpy.bool_'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.structures.wheel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a 2d wheel with specified dtype. If bool or int, can be used as a mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_quad</strong> (<em>The number of spokes per quadrant</em><em> (</em><em>graph quadrant</em><em>)</em><em></em>) – </p></li>
+<li><p><strong>width</strong> (<em>The width of a spoke.</em>) – </p></li>
+<li><p><strong>size</strong> (<em>The size of the output array that contains the wheel.</em>) – </p></li>
+<li><p><strong>r</strong> (<em>The maximum length of a spoke. Optional.</em>) – </p></li>
+<li><p><strong>start</strong> (<em>Offset of the first spoke from 0 in radians.</em>) – </p></li>
+<li><p><strong>centered</strong> (<em>If true</em><em>, </em><em>the wheel will be centered in the middle of the array</em>) – at pixel (size[0]//2, size[1]//2). If false, the wheel will be centered
+at the origin pixel (0,0).</p></li>
+<li><p><strong>dtype</strong> (<em>A valid numpy dtype.</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>A wheel that is composed of lines (called spokes) that are evenly rotated</em></p></li>
+<li><p><em>around the center pixel.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="imagemks.structures.gauss">
+<code class="descclassname">imagemks.structures.</code><code class="descname">gauss</code><span class="sig-paren">(</span><em>sigma</em>, <em>theta=0</em>, <em>size=None</em>, <em>centered=True</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.structures.gauss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a 2d gaussian distribution. Usually used as a filter or kernel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sigma</strong> (<em>The standard deviation of the gaussian. First value of tuple is the</em>) – x st. dev., second value is the y st. dev.. If one value is given,
+x and y st. dev. are the same.</p></li>
+<li><p><strong>size</strong> (<em>The size of the output array that contains the object. Defaults to</em>) – (round(4*sigma+1), round(4*sigma+1)).</p></li>
+<li><p><strong>centered</strong> (<em>If true</em><em>, </em><em>the center will be in the middle of the array</em>) – at pixel (size[0]//2, size[1]//2). If false, the center will be
+at the origin pixel (0,0). Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A 2d gaussian distribution.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="imagemks.structures.conical">
+<code class="descclassname">imagemks.structures.</code><code class="descname">conical</code><span class="sig-paren">(</span><em>r</em>, <em>slope=1</em>, <em>size=None</em>, <em>centered=True</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.structures.conical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a 2d array of z values for a cone in range [0,1]. The location of each value is
+tied to the x,y location of the pixel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>The radius of the base of the cone</em>) – </p></li>
+<li><p><strong>slope</strong> (<em>The slope of the sides of the cone. Determines how quickly the cone approaches the</em>) – maximum value of 1.</p></li>
+<li><p><strong>size</strong> (<em>The size of the output array that contains the object. Defaults to</em>) – (round(4*sigma+1), round(4*sigma+1)).</p></li>
+<li><p><strong>centered</strong> (<em>If true</em><em>, </em><em>the center will be in the middle of the array</em>) – at pixel (size[0]//2, size[1]//2). If false, the center will be
+at the origin pixel (0,0). Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A cone described by a 2d array.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="imagemks.structures.drop">
+<code class="descclassname">imagemks.structures.</code><code class="descname">drop</code><span class="sig-paren">(</span><em>r</em>, <em>threshold=None</em>, <em>size=None</em>, <em>centered=True</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.structures.drop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a 2d array of z values for a drop shape in range [0,1]. The location of each
+z value is tied to the x,y location of the pixel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>The radius of the base of the drop.</em>) – </p></li>
+<li><p><strong>threshold</strong> (<em>The relative values beneath which we determine the drop is equal to 0.</em>) – </p></li>
+<li><p><strong>size</strong> (<em>The size of the output array that contains the object. Defaults to</em>) – (round(4*sigma+1), round(4*sigma+1)).</p></li>
+<li><p><strong>centered</strong> (<em>If true</em><em>, </em><em>the center will be in the middle of the array</em>) – at pixel (size[0]//2, size[1]//2). If false, the center will be
+at the origin pixel (0,0). Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A drop described by a 2d array.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-imagemks.visualization"></span><dl class="function">
+<dt id="imagemks.visualization.make_boundary_image">
+<code class="descclassname">imagemks.visualization.</code><code class="descname">make_boundary_image</code><span class="sig-paren">(</span><em>L</em>, <em>A</em>, <em>thickness=1</em>, <em>color=(255</em>, <em>255</em>, <em>85)</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.visualization.make_boundary_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Marks borders of segmentation on the original image so that borders can
+be evaluated. Similar to skimage.segmentation.mark_boundaries. This function
+allows specifying a border thickness. This makes borders visible in high
+resolution images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<em>The labeled image that is a segmentation of A.</em>) – </p></li>
+<li><p><strong>A</strong> (<em>The original image. Grayscale and color are supported.</em>) – thickness : Thickness of the borders in pixels. Default is 1.
+color : Tuple of 3 uint8 RGB values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>The original image with marked borders.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-imagemks.workflows"></span><dl class="function">
+<dt id="imagemks.workflows.segment_fluor_cells">
+<code class="descclassname">imagemks.workflows.</code><code class="descname">segment_fluor_cells</code><span class="sig-paren">(</span><em>imgNuc</em>, <em>imgCyto</em>, <em>smooth_size</em>, <em>intensity_curve</em>, <em>short_th_radius</em>, <em>long_th_radius</em>, <em>min_frequency_to_remove</em>, <em>max_frequency_to_remove</em>, <em>max_size_of_small_objects_to_remove</em>, <em>peak_min_distance</em>, <em>size_after_watershed_to_remove</em>, <em>cyto_local_avg_size</em>, <em>zoomLev</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.workflows.segment_fluor_cells" title="Permalink to this definition">¶</a></dt>
+<dd><p>Segments fluorescent cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>imgNuc</strong> (<em>An image of nuclei with size</em><em> (</em><em>M</em><em>,</em><em>N</em><em>)</em>) – </p></li>
+<li><p><strong>imgCyto</strong> (<em>An image of the cytoskeleton with same size</em><em> (</em><em>M</em><em>,</em><em>N</em><em>)</em><em></em>) – </p></li>
+<li><p><strong>smooth_size</strong> (<em>The sigma of the gaussian.</em>) – </p></li>
+<li><p><strong>intensity_curve</strong> (<em>Exponent of the curve used to fit intensities on range</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em>) – </p></li>
+<li><p><strong>short_th_radius</strong> (<em>Radius of neighborhood used to calculate a local</em>) – average threshold.</p></li>
+<li><p><strong>long_th_radius</strong> (<em>Radius of neighborhood used to calculate a local</em>) – average threshold</p></li>
+<li><p><strong>min_frequency_to_remove</strong> (<em>Frequency in pixels used to define donut mask.</em>) – </p></li>
+<li><p><strong>max_frequency_to_remove</strong> (<em>Frequency in pixels used to define donut mask.</em>) – </p></li>
+<li><p><strong>max_size_of_small_objects_to_remove</strong> (<em>Size beneath which no cells can exist.</em>) – </p></li>
+<li><p><strong>peak_min_distance</strong> (<em>Min distance between nuclei.</em>) – </p></li>
+<li><p><strong>size_after_watershed_to_remove</strong> (<em>Size beneath which no cells can exist.</em>) – Calculated after watershed.</p></li>
+<li><p><strong>cyto_local_avg_size</strong> (<em>Radius of neighborhood used to calculate a local</em>) – average threshold</p></li>
+<li><p><strong>zoomLev</strong> (<em>Real magnification of the image.</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>(N, C)</strong> – cell. 0 corresponds to the background. C is a labeled cytockeleton image. The
+labels correspond to the closest nucleus in N.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>N is a labeled nucleus image. Where each label corresponds to an individual</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="imagemks.workflows.measure_fluor_cells">
+<code class="descclassname">imagemks.workflows.</code><code class="descname">measure_fluor_cells</code><span class="sig-paren">(</span><em>label_Nuc</em>, <em>label_Cyto</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.workflows.measure_fluor_cells" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates measurements for labeled Nucleus images and labeled Cytoskeleton images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label_Nuc</strong> (<em>A labeled nucleus image. Where each label corresponds to an individual</em>) – cell. 0 corresponds to the background.</p></li>
+<li><p><strong>label_Cyto</strong> (<em>A labeled cytockeleton image. The labels correspond to the closest</em>) – nucleus in N. 0 corresponds to the background.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>Cell_Number, Nuc_Area_um2, Nuc_Perimeter_um, Nuc_Area_Factor,</em></p></li>
+<li><p><em>Nuc_Major_L_um, Nuc_Minor_L_um, Nuc_eccentricity, Nuc_orientation,</em></p></li>
+<li><p><em>Nucleus_eq_diameter_um, Cyto_Area_um2, Cyto_um, Cyto_Area_Factor,</em></p></li>
+<li><p><em>Cyto_orientation, Cyto_Major_L_um, Cyto_Minor_L_um</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="imagemks.workflows.visualize_fluor_cells">
+<code class="descclassname">imagemks.workflows.</code><code class="descname">visualize_fluor_cells</code><span class="sig-paren">(</span><em>L</em>, <em>A</em>, <em>thickness=1</em><span class="sig-paren">)</span><a class="headerlink" href="#imagemks.workflows.visualize_fluor_cells" title="Permalink to this definition">¶</a></dt>
+<dd><p>Colors the original image with the segmented image. Also marks borders of
+segmentation on the original image so that borders can be evaluated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<em>The labeled image that is a segmentation of A.</em>) – </p></li>
+<li><p><strong>A</strong> (<em>The original image. Grayscale and color are supported.</em>) – thickness : Thickness of the borders in pixels. Default is 1.
+color : Tuple of 3 uint8 RGB values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>(v1, v2)</strong> – marked borders.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>v1 is a colored original image. v2 is the original image with</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">ImageMKS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Sven Voigt.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
